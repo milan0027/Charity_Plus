@@ -6,7 +6,7 @@ const path=require('path')
 const mongoose = require('mongoose')
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
-  }
+}
 const db= process.env.DB_URL
 
 const connectDB = async() => {
