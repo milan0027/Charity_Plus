@@ -8,7 +8,11 @@ import { Link, useParams } from "react-router-dom";
 import UserProfileAbout from "./UserProfileAbout";
 import NotFound from "../layout/NotFound";
 import UserProfileBottom from "./UserProfileBottom";
-const UserProfile = ({ getUserProfileById, otherprofile: { profile, loading, error }, auth }) => {
+const UserProfile = ({
+  getUserProfileById,
+  otherprofile: { profile, loading, error },
+  auth,
+}) => {
   let { id } = useParams();
   useEffect(() => {
     getUserProfileById(id);
@@ -16,7 +20,13 @@ const UserProfile = ({ getUserProfileById, otherprofile: { profile, loading, err
   return (
     <Fragment>
       <section className='container'>
-        {loading || profile===null ? ( error === null? <Spinner/>:<NotFound/>) :  ( 
+        {loading || profile === null ? (
+          error === null ? (
+            <Spinner />
+          ) : (
+            <NotFound />
+          )
+        ) : (
           <Fragment>
             <Link to='/userprofiles' className='btn btn-light'>
               Back To Profiles
@@ -31,7 +41,7 @@ const UserProfile = ({ getUserProfileById, otherprofile: { profile, loading, err
             <div className='my-1'>
               <UserProfileTop otherprofile={profile} id={id} />
               <UserProfileAbout profile={profile} />
-              <UserProfileBottom profile={profile}/>
+              <UserProfileBottom profile={profile} />
             </div>
           </Fragment>
         )}

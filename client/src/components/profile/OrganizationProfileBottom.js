@@ -7,31 +7,36 @@ import { getOrganizationPosts } from "../../actions/post";
 const OrganizationProfileBottom = ({
   post: { posts, loading },
   getOrganizationPosts,
-  id
+  id,
 }) => {
-  useEffect(()=>{
-    getOrganizationPosts(id)
-  },[getOrganizationPosts,id])
+  useEffect(() => {
+    getOrganizationPosts(id);
+  }, [getOrganizationPosts, id]);
   return (
     <div className='profile-about bg-light p-2 my-1'>
-        <h2 className='text-primary'>Posts</h2>
-        {loading ? (<Spinner/>) : (<>
-      {
-          posts && posts.map((post)=>{
-              return(
-                  <PostItem post={post} key={post._id.toString()} />
-              )
-          })
-      }{ posts.length === 0 ? <h4>Nothing to display...</h4>:''}</> )}
+      <h2 className='text-primary'>Posts</h2>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          {posts &&
+            posts.map((post) => {
+              return <PostItem post={post} key={post._id.toString()} />;
+            })}
+          {posts.length === 0 ? <h4>Nothing to display...</h4> : ""}
+        </>
+      )}
     </div>
   );
 };
 
 OrganizationProfileBottom.propTypes = {
   post: PropTypes.object.isRequired,
-  getOrganizationPosts: PropTypes.func.isRequired
+  getOrganizationPosts: PropTypes.func.isRequired,
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   post: state.post,
-})
-export default connect(mapStateToProps, { getOrganizationPosts })(OrganizationProfileBottom);
+});
+export default connect(mapStateToProps, { getOrganizationPosts })(
+  OrganizationProfileBottom
+);

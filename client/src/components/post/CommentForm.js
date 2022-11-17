@@ -9,7 +9,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import CircularProgress, {
   circularProgressClasses,
-} from '@mui/material/CircularProgress';
+} from "@mui/material/CircularProgress";
 const Input = styled("input")({
   display: "none",
 });
@@ -39,28 +39,32 @@ const CommentForm = ({ postId, addComment, commenting }) => {
   };
   return (
     <div>
-      <button className='btn btn-primary' onClick={handleClickOpen} disabled={commenting}>
+      <button
+        className='btn btn-primary'
+        onClick={handleClickOpen}
+        disabled={commenting}
+      >
         Add a Comment/Contribution
       </button>
-     {commenting && <button className="btn btn-danger ml-1">
-      <CircularProgress
-        variant="indeterminate"
-        disableShrink
-        sx={{
-          color: '#ffffff',
-          animationDuration: '800ms',
-        
-        
-          [`& .${circularProgressClasses.circle}`]: {
-            strokeLinecap: 'round',
-          },
-        }}
-        size={14}
-        thickness={6}
-        
-      />
-      {' '}Adding your content
-      </button>}
+      {commenting && (
+        <button className='btn btn-danger ml-1'>
+          <CircularProgress
+            variant='indeterminate'
+            disableShrink
+            sx={{
+              color: "#ffffff",
+              animationDuration: "800ms",
+
+              [`& .${circularProgressClasses.circle}`]: {
+                strokeLinecap: "round",
+              },
+            }}
+            size={14}
+            thickness={6}
+          />{" "}
+          Adding your content
+        </button>
+      )}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
           <div className='bg-primary p' style={{ fontFamily: "monospace" }}>
@@ -73,7 +77,7 @@ const CommentForm = ({ postId, addComment, commenting }) => {
               className='form'
               onSubmit={(e) => {
                 e.preventDefault();
-                addComment(postId,{ text, image });
+                addComment(postId, { text, image });
                 handleClose();
               }}
             >

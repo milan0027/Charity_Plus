@@ -5,16 +5,18 @@ import EnhancedTable from "./EnhancedTable";
 import { getLeaderboard } from "../../actions/profile";
 import Spinner from "../layout/Spinner";
 
-
-const Leaderboard = ({ leaderboard: { users, loading, error }, getLeaderboard }) => {
+const Leaderboard = ({
+  leaderboard: { users, loading, error },
+  getLeaderboard,
+}) => {
   useEffect(() => {
     getLeaderboard();
   }, [getLeaderboard]);
-//   console.log(users);
+  //   console.log(users);
   return (
     <section className='container'>
-       <h1 className='large text-primary'>Leaderboard</h1>
-      {loading || users ===  null ? <Spinner /> :<EnhancedTable rows={users} />}
+      <h1 className='large text-primary'>Leaderboard</h1>
+      {loading || users === null ? <Spinner /> : <EnhancedTable rows={users} />}
     </section>
   );
 };

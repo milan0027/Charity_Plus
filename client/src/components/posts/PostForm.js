@@ -13,7 +13,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import CircularProgress, {
   circularProgressClasses,
-} from '@mui/material/CircularProgress';
+} from "@mui/material/CircularProgress";
 const Input = styled("input")({
   display: "none",
 });
@@ -47,29 +47,33 @@ const PostForm = ({ addPost, posting }) => {
   };
   return (
     <div>
-      <button className='btn btn-primary' onClick={handleClickOpen} disabled={posting}>
+      <button
+        className='btn btn-primary'
+        onClick={handleClickOpen}
+        disabled={posting}
+      >
         Create a Post/Event
       </button>
-     {posting && <button className="btn btn-danger ml-1">
-      <CircularProgress
-        variant="indeterminate"
-        disableShrink
-        sx={{
-          color: '#ffffff',
-          animationDuration: '800ms',
-        
-        
-          [`& .${circularProgressClasses.circle}`]: {
-            strokeLinecap: 'round',
-          },
-        }}
-        size={14}
-        thickness={6}
-        
-      />
-      {' '}Creating your content
-      </button>}
-    
+      {posting && (
+        <button className='btn btn-danger ml-1'>
+          <CircularProgress
+            variant='indeterminate'
+            disableShrink
+            sx={{
+              color: "#ffffff",
+              animationDuration: "800ms",
+
+              [`& .${circularProgressClasses.circle}`]: {
+                strokeLinecap: "round",
+              },
+            }}
+            size={14}
+            thickness={6}
+          />{" "}
+          Creating your content
+        </button>
+      )}
+
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
           <div className='bg-primary p' style={{ fontFamily: "monospace" }}>

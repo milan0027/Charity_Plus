@@ -11,35 +11,54 @@ import { getCurrentProfile } from "../../actions/profile";
 import NotFound from "../layout/NotFound";
 import Alert from "../layout/alert";
 
-const Post = ({ getPost, post: { post, loading, commenting, error }, profile: {profile, loading: profileLoading}, getCurrentProfile }) => {
+const Post = ({
+  getPost,
+  post: { post, loading, commenting, error },
+  profile: { profile, loading: profileLoading },
+  getCurrentProfile,
+}) => {
   let { id } = useParams();
   useEffect(() => {
     getPost(id);
-    getCurrentProfile()
+    getCurrentProfile();
   }, [getPost, id, getCurrentProfile, profileLoading]);
 
   // console.log(profile);
   return (
     <>
       <section className='container'>
-      <Alert/>
-        {loading || post === null ? ( !error?
-          <Spinner />:<NotFound/>
+        <Alert />
+        {loading || post === null ? (
+          !error ? (
+            <Spinner />
+          ) : (
+            <NotFound />
+          )
         ) : (
           <>
             <Link to='/posts' className='btn'>
               Back to Posts
             </Link>
             <PostItem post={post} showActions={false} />
-             {!profileLoading && profile ?<CommentForm commenting={commenting} postId = {post._id}/>:''}
-             <div className='bg-primary p my-1'>
-                   <h3>Comments/Contributions</h3>
-              </div>
-            <div className="comments">
-                {post.comments.map(comment => (
-                    <CommentItem key={comment._id} event={post.event} comment= {comment} postId={post._id} organisationId={post.user.toString()}/>
-                ))}
-                {post.comments.length === 0?<h4>Nothing to display...</h4>:''}
+            {!profileLoading && profile ? (
+              <CommentForm commenting={commenting} postId={post._id} />
+            ) : (
+              ""
+            )}
+            <div className='bg-primary p my-1'>
+              <h3>Comments/Contributions</h3>
+            </div>
+            <div className='comments'>
+              {post.comments.map((comment) => (
+                <CommentItem
+                  key={comment._id}
+                  event={post.event}
+                  comment={comment}
+                  postId={post._id}
+                  organisationId={post.user.toString()}
+                />
+              ))}
+              {post.comments.length === 0 ? <h4>Nothing to display...</h4> : ""}
             </div>
           </>
         )}
@@ -52,12 +71,12 @@ Post.propTypes = {
   getPost: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   post: state.post,
-  profile: state.profile
+  profile: state.profile,
 });
 
 export default connect(mapStateToProps, { getPost, getCurrentProfile })(Post);

@@ -6,7 +6,7 @@ import OrganizationProfileTop from "./OrganizationProfileTop";
 import { getOrganizationProfileById } from "../../actions/profile";
 import { Link, useParams } from "react-router-dom";
 import OrganizationProfileAbout from "./OrganizationProfileAbout";
-import OrganizationProfileBottom from './OrganizationProfileBottom'
+import OrganizationProfileBottom from "./OrganizationProfileBottom";
 import NotFound from "../layout/NotFound";
 import Alert from "../layout/alert";
 const OrganizationProfile = ({
@@ -43,12 +43,11 @@ const OrganizationProfile = ({
               )}
             {
               <div className='my-1'>
-              <OrganizationProfileTop otherprofile={profile}  id={id} />
-              <OrganizationProfileAbout profile={profile} />
-              <OrganizationProfileBottom  id={id}/>
+                <OrganizationProfileTop otherprofile={profile} id={id} />
+                <OrganizationProfileAbout profile={profile} />
+                <OrganizationProfileBottom id={id} />
               </div>
             }
-          
           </Fragment>
         )}
       </section>
