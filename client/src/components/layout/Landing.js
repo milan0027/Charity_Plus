@@ -31,7 +31,10 @@ const Landing = ({ isAuthenticated }) => {
                 <a href='https://github.com/artiyadav28' target='__blank'>
                   <i className='fab fa-github'></i>
                 </a>{" "}
-                <a href='https://github.com/milan0027/charityplus' target='__blank'>
+                <a
+                  href='https://github.com/milan0027/charityplus'
+                  target='__blank'
+                >
                   {" "}
                   2728{" "}
                 </a>{" "}

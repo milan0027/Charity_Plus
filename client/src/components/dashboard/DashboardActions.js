@@ -41,19 +41,21 @@ const DashboardActions = ({ profile, id, setNotificationsZero }) => {
     }
   }, [open]);
 
-  useEffect(()=>{
-    setNotCount(profile.count)
-  },[profile.count])
+  useEffect(() => {
+    setNotCount(profile.count);
+  }, [profile.count]);
   return (
     <>
       <div className='dash-buttons my-2'>
         <Link to='/edit-profile'>
-          <button  className='btn btn-primary my'>
-              <i className='fas fa-user-circle text-primary'></i> Edit Profile
+          <button className='btn btn-primary my'>
+            <i className='fas fa-user-circle text-primary'></i> Edit Profile
           </button>
-          
         </Link>
-        <button className='btn btn-primary my' onClick={handleClickOpen("paper")}>
+        <button
+          className='btn btn-primary my'
+          onClick={handleClickOpen("paper")}
+        >
           Notifications {notCount}
         </button>
         <Dialog
@@ -72,7 +74,7 @@ const DashboardActions = ({ profile, id, setNotificationsZero }) => {
                 <div className='notifications my-1 bg-light p'>
                   <p>{item.text}</p>
                   <p className='post-date'>
-                   <Moment format="YYYY/MM/DD HH:mm">{item.date}</Moment>
+                    <Moment format='YYYY/MM/DD HH:mm'>{item.date}</Moment>
                   </p>
                 </div>
               </Link>

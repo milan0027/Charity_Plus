@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 import { css } from "@emotion/react";
 import PuffLoader from "react-spinners/PuffLoader";
 
@@ -9,10 +9,10 @@ const override = css`
 `;
 const Spinner = () => {
   return (
-      <Fragment>
-         <PuffLoader color={"red"} loading={true} css={override} size={150} />
-      </Fragment>
+    <Fragment>
+      <PuffLoader color={"red"} loading={true} css={override} size={150} />
+    </Fragment>
   );
 };
 
-export default Spinner
+export default Spinner;
