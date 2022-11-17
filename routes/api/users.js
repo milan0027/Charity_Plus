@@ -3,7 +3,6 @@ const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-//const config = require('config')
 const { check, validationResult } = require("express-validator");
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
@@ -59,7 +58,6 @@ router.post(
       });
 
       //encrypt password
-
       const salt = await bcrypt.genSalt(10);
 
       user.password = await bcrypt.hash(password, salt);
@@ -85,8 +83,6 @@ router.post(
       console.log(err.message);
       return res.status(500).send("server error");
     }
-
-    //res.send('user route')
   }
 );
 router.get("/rating", async (req, res) => {

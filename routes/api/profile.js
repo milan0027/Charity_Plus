@@ -4,6 +4,7 @@ const { validationResult, check } = require("express-validator");
 const auth = require("../../middleware/auth");
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
+
 //@route GET api/profile/me
 //access private
 router.get("/me", auth, async (req, res) => {

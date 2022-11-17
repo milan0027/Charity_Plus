@@ -1,5 +1,4 @@
 const express = require("express");
-
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const auth = require("../../middleware/auth");
@@ -41,8 +40,6 @@ router.post(
 
       //organization.posts.unshift({ post: newPost._id});
       const post = await newPost.save();
-
-      // await organization.save();
 
       res.json(post);
 

@@ -2,11 +2,10 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-//const config = require('config')
 const { check, validationResult } = require("express-validator");
-
 const auth = require("../../middleware/auth");
 const User = require("../../models/User");
+
 //@route GET api/auth
 router.get("/", auth, async (req, res) => {
   try {
@@ -76,8 +75,6 @@ router.post(
       console.log(err.message);
       return res.status(500).send("server error");
     }
-
-    //res.send('user route')
   }
 );
 
