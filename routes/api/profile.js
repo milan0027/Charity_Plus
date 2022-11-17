@@ -101,7 +101,45 @@ router.post(
           { new: true }
         );
 
-        const resProfile = await Profile.findOne({user: req.user.id}).populate("user", ["name", "avatar", "rating", "type_of", "date"])
+        const resProfile = await Profile.findOne({ user: req.user.id })
+          .populate("user", ["name", "avatar", "rating", "type_of", "date"])
+          .populate({
+            path: "contributions",
+            populate: {
+              path: "comment",
+              model: "Comment",
+            },
+          })
+          .populate({
+            path: "posts",
+            populate: {
+              path: "post",
+              model: "Post",
+            },
+          })
+          .populate({
+            path: "followers",
+            populate: {
+              path: "user",
+              model: "User",
+            },
+          })
+          .populate({
+            path: "following",
+            populate: {
+              path: "user",
+              model: "User",
+            },
+          });
+
+        return res.json(resProfile);
+      }
+
+      //create
+      profile = new Profile(profileFields);
+      await profile.save();
+      const resProfile = await Profile.findOne({ user: req.user.id })
+        .populate("user", ["name", "avatar", "rating", "type_of", "date"])
         .populate({
           path: "contributions",
           populate: {
@@ -129,43 +167,7 @@ router.post(
             path: "user",
             model: "User",
           },
-        })
-
-        return res.json(resProfile);
-      }
-
-      //create
-      profile = new Profile(profileFields);
-      await profile.save();
-      const resProfile = await Profile.findOne({user: req.user.id}).populate("user", ["name", "avatar", "rating", "type_of", "date"])
-      .populate({
-        path: "contributions",
-        populate: {
-          path: "comment",
-          model: "Comment",
-        },
-      })
-      .populate({
-        path: "posts",
-        populate: {
-          path: "post",
-          model: "Post",
-        },
-      })
-      .populate({
-        path: "followers",
-        populate: {
-          path: "user",
-          model: "User",
-        },
-      })
-      .populate({
-        path: "following",
-        populate: {
-          path: "user",
-          model: "User",
-        },
-      })
+        });
 
       return res.json(resProfile);
     } catch (err) {
@@ -182,7 +184,13 @@ router.get("/user", async (req, res) => {
   try {
     const profiles = await Profile.find(
       { type_of: false },
-      { contributions: 0, posts: 0, followers: 0, following: 0, notifications:0 }
+      {
+        contributions: 0,
+        posts: 0,
+        followers: 0,
+        following: 0,
+        notifications: 0,
+      }
     ).populate("user", ["name", "avatar", "rating"]);
 
     res.json(profiles);
@@ -228,7 +236,13 @@ router.get("/organization", async (req, res) => {
   try {
     const profiles = await Profile.find(
       { type_of: true },
-      { contributions: 0, posts: 0, followers: 0, following: 0, notifications: 0 }
+      {
+        contributions: 0,
+        posts: 0,
+        followers: 0,
+        following: 0,
+        notifications: 0,
+      }
     ).populate("user", ["name", "avatar", "rating"]);
 
     res.json(profiles);
@@ -335,25 +349,18 @@ router.post("/follow/:id", auth, async (req, res) => {
     res.json({ profile: organization, state: 1 });
     try {
       const follower = await User.findById(req.user.id);
-      organization.count+=1;
-      if(organization.notifications.length === 10) {
-          organization.notifications.pop();
+      organization.count += 1;
+      if (organization.notifications.length === 10) {
+        organization.notifications.pop();
       }
       organization.notifications.unshift({
-          url: `/profile/user/${req.user.id}`,
-          text: `${follower.name} (@${user.handle}) started following you.`
-      })
+        url: `/profile/user/${req.user.id}`,
+        text: `${follower.name} (@${user.handle}) started following you.`,
+      });
       await organization.save();
-      
     } catch (e) {
       console.log(e.message);
-      
     }
-   
-    
-
-
-
   } catch (e) {
     console.log(e.message);
     res.status(500).send("server error");
@@ -368,7 +375,13 @@ router.get("/followers/:id", auth, async (req, res) => {
     const userFollowers = organization.followers.map((item) => item.user);
     const followers = await Profile.find(
       { user: { $in: userFollowers } },
-      { contributions: 0, posts: 0, followers: 0, following: 0, notifications: 0 }
+      {
+        contributions: 0,
+        posts: 0,
+        followers: 0,
+        following: 0,
+        notifications: 0,
+      }
     ).populate("user", ["name", "avatar", "rating"]);
     return res.json(followers);
   } catch (err) {
@@ -386,7 +399,13 @@ router.get("/following/:id", auth, async (req, res) => {
     const userFollowing = user.following.map((item) => item.user);
     const following = await Profile.find(
       { user: { $in: userFollowing } },
-      { contributions: 0, posts: 0, followers: 0, following: 0, notifications:0 }
+      {
+        contributions: 0,
+        posts: 0,
+        followers: 0,
+        following: 0,
+        notifications: 0,
+      }
     ).populate("user", ["name", "avatar", "rating"]);
 
     return res.json(following);
@@ -398,12 +417,14 @@ router.get("/following/:id", auth, async (req, res) => {
 
 router.put("/notifications", auth, async (req, res) => {
   try {
-      await Profile.findOneAndUpdate({user: req.body.id}, {
-        count: 0
-      })
+    await Profile.findOneAndUpdate(
+      { user: req.body.id },
+      {
+        count: 0,
+      }
+    );
 
-      return res.json({});
-      
+    return res.json({});
   } catch (err) {
     console.error(err.message);
     res.status(500).send("server error");
