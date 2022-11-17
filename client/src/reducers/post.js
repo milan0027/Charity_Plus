@@ -13,7 +13,7 @@ import {
   UPDATE_COMMENT_UNLIKES,
   APPROVE_COMMENT,
   POSTING,
-  COMMENTING
+  COMMENTING,
 } from "../actions/types";
 
 const initialState = {
@@ -61,10 +61,10 @@ function post(state = initialState, action) {
     case CLEAR_POST:
       return {
         ...state,
-        post:null,
+        post: null,
         loading: false,
-        error: null
-      }
+        error: null,
+      };
     case POST_ERROR:
       return {
         ...state,
@@ -95,11 +95,12 @@ function post(state = initialState, action) {
       return {
         ...state,
         post: {
-            ...state.post,
-            comments: state.post.comments.map((comment) =>
-            comment._id === payload.id ? { ...comment, likes: payload.likes } : comment
+          ...state.post,
+          comments: state.post.comments.map((comment) =>
+            comment._id === payload.id
+              ? { ...comment, likes: payload.likes }
+              : comment
           ),
-          
         },
         loading: false,
         error: null,
@@ -108,11 +109,12 @@ function post(state = initialState, action) {
       return {
         ...state,
         post: {
-            ...state.post,
-            comments: state.post.comments.map((comment) =>
-            comment._id === payload.id ? { ...comment, unlikes: payload.unlikes } : comment
+          ...state.post,
+          comments: state.post.comments.map((comment) =>
+            comment._id === payload.id
+              ? { ...comment, unlikes: payload.unlikes }
+              : comment
           ),
-          
         },
         loading: false,
         error: null,
@@ -133,7 +135,6 @@ function post(state = initialState, action) {
           comments: state.post.comments.filter(
             (comment) => comment._id !== payload
           ),
-        
         },
         loading: false,
         error: null,
@@ -141,24 +142,25 @@ function post(state = initialState, action) {
     case APPROVE_COMMENT:
       return {
         ...state,
-        post:{
+        post: {
           ...state.post,
-          comments: state.post.comments.map((comment)=>
-            comment._id === payload ? {...comment, approval: true} : comment)
+          comments: state.post.comments.map((comment) =>
+            comment._id === payload ? { ...comment, approval: true } : comment
+          ),
         },
-        loading:false,
-        error:null
-      }
+        loading: false,
+        error: null,
+      };
     case POSTING:
       return {
-      ...state,
-      posting: true
-    }
+        ...state,
+        posting: true,
+      };
     case COMMENTING:
       return {
         ...state,
-        commenting: true
-      }
+        commenting: true,
+      };
     default:
       return state;
   }
